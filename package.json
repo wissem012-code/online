@@ -1,0 +1,74 @@
+{
+  "name": "stackblitz-zip",
+  "type": "module",
+  "version": "0.0.8",
+  "packageManager": "pnpm@10.20.0",
+  "description": "Download StackBlitz projects programmatically",
+  "license": "MIT",
+  "repository": "stackblitz-labs/stackblitz.zip",
+  "sideEffects": false,
+  "exports": {
+    ".": "./dist/index.mjs"
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/index.d.mts"
+      ]
+    }
+  },
+  "bin": {
+    "stackblitz-zip": "./dist/cli/zip.mjs",
+    "stackblitz-clone": "./dist/cli/clone.mjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "vitest dev",
+    "lint": "eslint .",
+    "prepare": "simple-git-hooks",
+    "prepack": "pnpm build",
+    "prepublishOnly": "pnpm lint && pnpm test",
+    "publish:alias": "node scripts/publish-alias.js",
+    "release": "bumpp",
+    "test": "pnpm test:unit && pnpm test:types",
+    "test:unit": "vitest",
+    "test:knip": "knip",
+    "test:versions": "installed-check -d",
+    "test:types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "client-zip": "^2.4.5"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "latest",
+    "@types/node": "^22.10.2",
+    "@vitest/coverage-v8": "latest",
+    "bumpp": "latest",
+    "changelogithub": "latest",
+    "eslint": "latest",
+    "installed-check": "latest",
+    "knip": "latest",
+    "lint-staged": "latest",
+    "simple-git-hooks": "latest",
+    "tsdown": "latest",
+    "typescript": "latest",
+    "unzipit": "^1.4.3",
+    "vitest": "latest"
+  },
+  "resolutions": {
+    "stackblitz-zip": "link:."
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,ts,mjs,cjs,json,md,yml,*rc}": [
+      "npx eslint --fix"
+    ]
+  }
+}
